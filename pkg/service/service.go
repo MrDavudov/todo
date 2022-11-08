@@ -1,8 +1,12 @@
 package servise
 
-import "github.com/MrDavudov/todo/pkg/repository"
+import (
+	"github.com/MrDavudov/todo/internal/model"
+	"github.com/MrDavudov/todo/pkg/repository"
+)
 
 type Auth interface {
+	CreateUser(user model.User) (int, error)
 }
 
 type TodoList interface {
@@ -17,6 +21,9 @@ type Service struct {
 	TodoItem
 }
 
-func NewService(rep *repository.Repository) *Service {
-	return &Service{}
+func NewService(repo *repository.Repository) *Service {
+	return &Service{
+		Auth: NewAuthService(repo.Auth),
+	}
 }
+

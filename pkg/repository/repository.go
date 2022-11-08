@@ -1,10 +1,12 @@
 package repository
 
 import (
+	"github.com/MrDavudov/todo/internal/model"
 	"github.com/jmoiron/sqlx"
 )
 
 type Auth interface {
+	CreateUser(user model.User) (int, error)
 }
 
 type TodoList interface {
@@ -20,5 +22,7 @@ type Repository struct {
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{}
+	return &Repository{
+		Auth: NewAuthPostgres(db),
+	}
 }
