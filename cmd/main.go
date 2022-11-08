@@ -10,6 +10,7 @@ import (
 	"github.com/MrDavudov/todo/pkg/service"
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -28,7 +29,7 @@ func main() {
 		DBName: viper.GetString("db.dbname"),
 		SSLMode: viper.GetString("db.sslmode"),
 		Password: os.Getenv("DB_PASSWORD"),
-	})
+	}, viper.GetString("db_url"))
 	if err != nil {
 		log.Fatalf("failed to initialize db: %s", err)
 	}

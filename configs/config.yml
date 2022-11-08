@@ -6,3 +6,5 @@ db:
   port: "5432"
   dbname: "postgres"
   sslmode: "disable"
+
+db_url: "host=localhost port=5432 user=postgres dbname=postgres password=123qwe sslmode=disable"
