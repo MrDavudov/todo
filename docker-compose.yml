@@ -8,6 +8,7 @@
 services:
   db:
     image: postgres
+    command: -c ssl=off
     environment:
       POSTGRES_DB: "postgres"
       POSTGRES_USER: "postgres"
