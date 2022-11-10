@@ -8,6 +8,7 @@ import (
 type Auth interface {
 	CreateUser(user model.User) (int, error)
 	GetUser(username, password string) (model.User, error)
+	FindUser(user, username string) error
 }
 
 type TodoList interface {

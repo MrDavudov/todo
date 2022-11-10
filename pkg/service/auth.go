@@ -35,6 +35,11 @@ func NewAuthService(repo repository.Auth) *AuthService {
 // Create user
 func (s *AuthService) CreateUser(user model.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
+
+	if err := s.repo.FindUser(user.Name, user.Username); err == nil {
+		return 0, err
+	}
+
 	return s.repo.CreateUser(user)
 }
 

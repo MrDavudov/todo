@@ -36,3 +36,12 @@ func (r *AuthPostgres) GetUser(username, password string) (model.User, error) {
 
 	return user, err
 }
+
+func (r *AuthPostgres) FindUser(name, username string) error {
+	var user model.User
+	query := fmt.Sprintf("SELECT id FROM %s WHERE name=$1 AND username=$2", usersTable)
+	err := r.db.Get(&user, query, name, username)
+	fmt.Println(err)
+
+	return err
+}
