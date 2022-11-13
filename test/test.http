@@ -1,0 +1,56 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjgzOTk2NzAsImlhdCI6MTY2ODM1NjQ3MCwidXNlcl9pZCI6N30.ZuDTAyQsmMLefBc7NDtJxjl-Pd-JUwnUcip-3jXbk9o
+@host = http://localhost:8080
+
+### Авторизация
+POST {{host}}/auth/sign-in
+content-type: application/json
+
+{
+    "username": "Davudov",
+    "password": "123qwe"
+}
+
+### Аутентификация
+POST {{host}}/auth/sign-up
+content-type: application/json
+
+{
+    "name": "Ruslan",
+    "username": "Davudov",
+    "password": "123qwe"
+}
+
+### Добавления списка пользователя
+POST {{host}}/api/lists HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Cписок важных дел",
+    "description": "Срочно нужно сделать"
+}
+
+### Запрос всех списков todo
+GET {{host}}/api/lists HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Запрос по id списка todo
+GET {{host}}/api/lists/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Удаление по id списка todo
+DELETE {{host}}/api/lists/3 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### Изменения по id списка todo
+PUT {{host}}/api/lists/2 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Пойти на работу",
+    "description": "Обязательно к выполнению"
+}

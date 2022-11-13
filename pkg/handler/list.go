@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"sort"
 	"strconv"
 
 	"github.com/MrDavudov/todo/internal/model"
@@ -49,6 +50,10 @@ func (h *Handler) getAllList(c *gin.Context) {
 		return
 	}
 
+	sort.SliceStable(lists, func(i, j int) bool {
+		return lists[i].Id < lists[j].Id
+	})
+
 	c.JSON(http.StatusOK, getAllListsResponse{
 		Data: lists,
 	})
@@ -92,12 +97,12 @@ func (h *Handler) updateList(c *gin.Context) {
 	var input model.UpdateListInput
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
-		return		
+		return
 	}
 
 	if err := h.services.Update(userId, id, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return		
+		return
 	}
 
 	c.JSON(http.StatusOK, statusResponse{

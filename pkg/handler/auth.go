@@ -21,6 +21,13 @@ func (h *Handler) signUp(c *gin.Context) {
 		return
 	}
 
+	if id == 0 {
+		c.JSON(http.StatusOK, errorResponse{
+			Message: "Error: this user is already logged in",
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})
