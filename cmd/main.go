@@ -35,6 +35,7 @@ func main() {
 	if err != nil {
 		logrus.Fatalf("failed to initialize db: %s", err)
 	}
+	logrus.Info("Run db postgres")
 
 	repos := repository.NewRepository(db)
 	servises := servise.NewService(repos)
@@ -44,6 +45,7 @@ func main() {
 	if err := srv.Start(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		logrus.Fatalf("errors occured while running http server: %s", err)
 	}
+	logrus.Info("Start server")
 }
 
 func initConfig() error {
