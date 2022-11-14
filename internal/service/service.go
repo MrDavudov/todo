@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/MrDavudov/todo/internal/model"
-	"github.com/MrDavudov/todo/pkg/repository"
+	"github.com/MrDavudov/todo/internal/repository"
 )
 
 type Auth interface {

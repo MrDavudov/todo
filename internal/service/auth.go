@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/MrDavudov/todo/internal/model"
-	"github.com/MrDavudov/todo/pkg/repository"
+	"github.com/MrDavudov/todo/internal/repository"
 	"github.com/dgrijalva/jwt-go"
 )
 
