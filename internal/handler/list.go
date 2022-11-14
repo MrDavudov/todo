@@ -106,7 +106,7 @@ func (h *Handler) updateList(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, statusResponse{
-		Status: "ok",
+		Status: "update list",
 	})
 }
 

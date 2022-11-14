@@ -7,9 +7,9 @@ import (
 	"syscall"
 
 	"github.com/MrDavudov/todo/internal/server"
-	"github.com/MrDavudov/todo/pkg/handler"
-	"github.com/MrDavudov/todo/pkg/repository"
-	servise "github.com/MrDavudov/todo/pkg/service"
+	"github.com/MrDavudov/todo/internal/handler"
+	"github.com/MrDavudov/todo/internal/repository"
+	servise "github.com/MrDavudov/todo/internal/service"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
