@@ -1,4 +1,4 @@
-package servise
+package service
 
 import (
 	"github.com/MrDavudov/todo/internal/model"
@@ -20,6 +20,11 @@ type TodoList interface {
 }
 
 type TodoItem interface {
+	Create(userId, itemId int, item model.TodoItem) (int, error)
+	GetAll(userId, listId int) ([]model.TodoItem, error)
+	GetById(userId, itemId int) (model.TodoItem, error)
+	Delete(userId, itemId int) error
+	Update(userId, itemId int, input model.UpdateItemInput) error
 }
 
 type Service struct {
@@ -32,6 +37,7 @@ func NewService(repo *repository.Repository) *Service {
 	return &Service{
 		Auth: NewAuthService(repo.Auth),
 		TodoList: NewTodoListService(repo.TodoList),
+		TodoItem: NewTodoItemService(repo.TodoItem, repo.TodoList),
 	}
 }
 

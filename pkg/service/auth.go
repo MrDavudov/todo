@@ -1,4 +1,4 @@
-package servise
+package service
 
 import (
 	"crypto/sha1"

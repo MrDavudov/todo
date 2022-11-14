@@ -1,4 +1,4 @@
-package servise
+package service
 
 import (
 	"github.com/MrDavudov/todo/internal/model"
