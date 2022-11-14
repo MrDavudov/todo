@@ -1,7 +1,10 @@
 package main
 
 import (
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/MrDavudov/todo/internal/server"
 	"github.com/MrDavudov/todo/pkg/handler"
@@ -14,7 +17,7 @@ import (
 )
 
 func main() {
-	logrus.SetFormatter(new(logrus.JSONFormatter))
+	logrus.SetFormatter(new(logrus.TextFormatter))
 
 	if err := initConfig(); err != nil {
 		logrus.Fatalf("error Initializing configs: %s", err)
@@ -35,17 +38,33 @@ func main() {
 	if err != nil {
 		logrus.Fatalf("failed to initialize db: %s", err)
 	}
-	logrus.Info("Run db postgres")
 
 	repos := repository.NewRepository(db)
 	servises := servise.NewService(repos)
 	handlers := handler.NewHandler(servises)
 
 	srv := new(server.Server)
-	if err := srv.Start(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-		logrus.Fatalf("errors occured while running http server: %s", err)
-	}
+	go func() {
+		if err := srv.Start(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			logrus.Fatalf("errors occured while running http server: %s", err)
+		}
+	}()
+
 	logrus.Info("Start server")
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	logrus.Info("Shutting down")
+
+	if err := srv.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("error occured on server shutting down: %s", err.Error())
+	}
+
+	if err := db.Close(); err != nil {
+		logrus.Errorf("error occured on db connection close: %s", err.Error())
+	}
 }
 
 func initConfig() error {
